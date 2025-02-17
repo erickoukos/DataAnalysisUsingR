@@ -1,52 +1,49 @@
-#   Session 2: Online Academic Data Analysis Bootcamp Using Open-
-#                 Access Program R
+#   Session 2: Data Analysis Using R - Data Management
 
 # Prerequisites 
 
-# 1. Install the following packages by running the following code. You should be connected to a
- # stable internet during the installation (Note: remove the # comment symbols to run the code line)
+# Install the following packages by running the following code. You should be connected to a stable internet during the installation (Note: remove the comment symbols to run the code line)
 
-#install.packages("Rcmdr", dependencies = TRUE); install.packages("writexl", dependencies = TRUE); 
-#install.packages("foreign", dependencies = TRUE); install.packages("haven", dependencies=TRUE)
+# install.packages("Rcmdr", dependencies = TRUE); install.packages("writexl", dependencies = TRUE);
+# install.packages("foreign", dependencies = TRUE); install.packages("haven", dependencies=TRUE)
 
-
-
-# 2. Download and save all the files sent in the session 2 email 
-
-# 3. Set your working directory to the folder you have saved session's files sent via email 
+# Set your working directory to the folder you have saved session's files sent via email 
 getwd()
-setwd("~/Documents/Projects/R/Essential Level/Session Two/Practicals")
+setwd(setwd("~/Documents/Projects/DataAnalysisUsingR/Session Two"))
+
 # Getting data into and out of R
 ## Getting data into R
-#1. Creating variables
+
+# 1. Creating variables
 # From first session the c() / concatenate function was to create objects that contain data.
+
 studentNames <- c("John","James","Albert","Ahmed", "Aarya")
 studentGrades1 <- c(60, 87, 53, 72, 85) #Grades at test 1
 
-#More efficient to combine the files into a single object: dataframe
-#Use the data.frame() function while renaming studentNames to
-#Name and studentGrades1 to First_Grade:
+# More efficient to combine the files into a single object: dataframe
+# Use the data.frame() function while renaming studentNames to
+# Name and studentGrades1 to First_Grade:
 
-students <-data.frame(Name = studentNames, First_Grade = studentGrades1)
-#Run below to see the dataframe:
+students <- data.frame(Name = studentNames, First_Grade = studentGrades1)
+# Run below to see the dataframe:
 students
 
 # dataframe$variableName can be used to refer to the variables
 # e.g. to get student Name data run 
 students$Name
-
-#similarly, for First Grade variable we could use 
+students
+# similarly, for First Grade variable we could use 
 
 students$First_Grade
 
-#We can add another variable e.g. Second Grades using the c() function as follows:
+# We can add another variable e.g. Second Grades using the c() function as follows:
 students$Second_Grade <- c(65, 56, 87, 79, 85) 
 
-#run below to view the new dataframe
+# run below to view the new dataframe
 
 students
 
-#You can view variable names using:
+# You can view variable names using:
 names(students)
 
 # 2. Getting data into R: Calculating new variables from existing ones
@@ -56,7 +53,9 @@ students$Improvement <- students$Second_Grade - students$First_Grade
 students
 
 # This inserts a new variable "Improvement" to the students dataframe.
+
 names(students)
+
 # 3. Getting data into R: Creating a date variable
 #Text converted into date objects using the as.Date() function.
 
@@ -75,15 +74,18 @@ agegap
 # Write levels = c("Lecturers", "Students")
 
 job <- c(1,1,1,1,1,2,2,2,2,2) 
-#or better use function rep(number_of_repetitions) 
+# or better use function rep(number_of_repetitions) 
 job <- c(rep(1, 5),rep(2, 5))
 
 
-job <- factor(job, levels = c(1:2), labels = c("Lecturer", "Student"))
+job <- factor(job, 
+              levels = c(1:2), 
+              labels = c("Lecturer", "Student"))
 summary(job)
 # Or
 ?gl
-job <- gl(2, 5, labels = c("Lecturer", "Student"))
+job <- gl(2, 5, 
+          labels = c("Lecturer", "Student"))
 summary(job)
 
 # Check factor levels
@@ -92,38 +94,48 @@ levels(job)
 
 # How to rename factor levels e.g. to Medical Lecturer and Medical Student
 levels(job) <- c("Medical Lecturer", "Medical Student")
+
 # Missing Data
 # In R, missing values are represented by the symbol NA (not available) 
 # Testing for Missing Values
 # is.na(x) returns TRUE if x is missing
+
 y <- c(1,2,3,NA)
 is.na(y) # returns a vector (F F F T)
 
-# Missing Data- Recording Values to Missing
+# Missing Data- Recoding Values to Missing
 # data frame that codes missing values as 99
-df <- data.frame(variable1 = c(1:3, 99), variable2 = c(2.5, 4.2, 99, 3.2))
+
+df <- data.frame(variable1 = c(1:3, 99), 
+                 variable2 = c(2.5, 4.2, 99, 3.2))
 # change 99s to NAs
+
 df[df == 99] <- NA
 
 df
 # Excluding Missing Values from Analyses
 # Arithmetic functions on missing values yield missing values.
-x <- c(1,2,NA,3)
+x <- c(1, 2, NA, 3)
 mean(x)       # returns NA
-mean(x, na.rm=TRUE) # returns 2
+mean(x, na.rm = TRUE) # returns 2
 
-#The function complete.cases() returns a logical vector indicating which cases are complete.
-# list rows of data that have missing values mydata[!complete.cases(mydata),]
-df[!complete.cases(df),]
-   
+# The function complete.cases() returns a logical vector indicating which cases are complete.List rows of data that have missing values mydata[!complete.cases(mydata),]
+
+df[complete.cases(df),]
+df[!complete.cases(df),] 
+
 # The function na.omit() returns the object with listwise deletion of missing values.
 # create new dataset without missing data newdata <- na.omit(mydata)
+
+na.omit(df)   
+
 newdata <- na.omit(df)   
-newdata  
+newdata 
+
 # Entering data with R Commander 
-# install.packages("Rcmdr", dependencies = TRUE)
+install.packages("Rcmdr", dependencies = TRUE)
 install.packages("aplpack")
-install.packages("leaps", dependencies = TRUE)
+# install.packages("leaps", dependencies = TRUE)
 library(Rcmdr)
 
 # New window opens
@@ -150,21 +162,22 @@ library(Rcmdr)
 # Repeat the process above to saved file is either a Text (Tab Delimited) .txt file 
 
 getwd()
-setwd('/home/erick/Documents/Projects/R/Essential Level/Session Two/Practicals')
+setwd('/home/erick/Documents/Projects/DataAnalysisUsingR/Session Two')
 # Importing data: data saved in working directory
- # Import data from CSV
- # This is the code we use to import csv file into R
- GSSsubset_df <- read.table("GSSsubset.csv", header=TRUE, sep=",") # Or this code:
+# Import data from CSV
+# This is the code we use to import csv file into R
+
+ GSSsubset_df <- read.table("GSSsubset.csv", header = TRUE, sep = ",") # Or this code:
  head(GSSsubset_df)
  
  GSSsubset_df <- read.csv("GSSsubset.csv",header=T,as.is=T)
  head(GSSsubset_df)
  
  #Import data from TXT
- GSSsubset_df <- read.delim("GSSsubset.txt", as.is=TRUE, header=T) # Or this code:
+ GSSsubset_df <- read.delim("GSSsubset.txt", as.is = TRUE, header=T) # Or this code:
  head(GSSsubset_df)
  
- GSSsubset_df <- read.delim("GSSsubset.txt", header=T, strings=F)
+ GSSsubset_df <- read.delim("GSSsubset.txt", header = T, strings= F)
  head(GSSsubset_df)
  
  #Import data from Excel
@@ -175,7 +188,7 @@ setwd('/home/erick/Documents/Projects/R/Essential Level/Session Two/Practicals')
 # Import dataset: from folder with pathway
 read.csv("full_path")
 #Example (change pathway to your working directory)
-gss <- read.csv("/home/erick/Documents/Projects/R/Essential Level/Session Two/Practicals/GSSsubset.csv")
+gss <- read.csv("~/Documents/Projects/DataAnalysisUsingR/Session Two/GSSsubset.csv")
 gss
 
 # Note R uses Forward Slash / in the directory path: C:/Users/R workshop
@@ -194,7 +207,7 @@ gss
  
  #Examples
 library(foreign)
-sleep_df <- read.spss("sleep.sav", use.value.label=TRUE, to.data.frame=TRUE)
+sleep_df <- read.spss("sleep.sav", use.value.label = TRUE, to.data.frame = TRUE)
 head(sleep_df)
 
 ?sleep
@@ -233,13 +246,14 @@ head(airline_df)
  
 # Exporting Data
 # To A Tab Delimited Text File
+write.table(airline_df, "airline_df.csv", sep="\t")
 write.table(GSSsubset, "GSSExported2.txt", sep="\t") 
 
 # To an Excel Spreadsheet 
 
 # install.packages("writexl")
 library("writexl")
-write_xlsx(GSSsubset, "GSSExported1.xlsx")
+write_xlsx(airline_df, "airline_df.xlsx")
 
 # Viewing/ Examining Data
 # list objects in the working environment
@@ -253,7 +267,7 @@ write_xlsx(GSSsubset, "GSSExported1.xlsx")
 GSSsubset$degree <- as.factor(GSSsubset$degree) #convert the variable to factor
 
 levels(GSSsubset$degree)
-
+table(GSSsubset$degree)
 # dimensions of an object (rows (cases, subjects ..) and columns(variables) in that order)
   dim(GSSsubset)
 
