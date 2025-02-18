@@ -288,3 +288,16 @@ ncol(GSSsubset)
 colnames(GSSsubset)
 # What are the row names in the dataset
 rownames(GSSsubset)
+
+
+# ###
+# install.packages("rio", dependencies = T)
+# install_formats()
+library(rio)
+require(rio)
+
+censusData <- import("Session Two/census.dta")
+head(censusData)
+
+export(censusData, "Census.xlsx")
+export(censusData, "Census.csv")
