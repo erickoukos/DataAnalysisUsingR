@@ -184,23 +184,23 @@ newdata_mtcars_5 <- mtcars[1:5,]
 head(newdata_mtcars_5)
 
 # based on variable values where Number of carburetors =2 and  Miles/(US) gallon > 20.09
-newdata_mtcars_carb_mpg <- mtcars[ which(mtcars$carb==2 & mtcars$mpg > 20.09), ]
+newdata_mtcars_carb_mpg <- mtcars[which(mtcars$carb == 2 & mtcars$mpg > 20.09), ]
 
 print(newdata_mtcars_carb_mpg)
 
 # or
 attach(mtcars)
-newdata_mtcars_carb_mpg <- mtcars[ which(mtcars$carb==2 & mtcars$mpg > 20.09), ]
+newdata_mtcars_carb_mpg <- mtcars[which(carb==2 & mpg > 20.09), ]
 detach(mtcars)
 
 
 # Subsetting Data: Selection using the Subset
-# The subset( ) function is the easiest way to select variables and observations. 
-# Example: select all rows that have a value of weight greater than or equal to
-# 3.610 or wt less then 2.58. We keep the mpg, cyl and disp columns.
+# The subset() function is the easiest way to select variables and observations. 
+# Example: select all rows that have a value of weight greater than or equal to 3.610 or wt less then 2.58. We keep the mpg, cyl and disp columns.
 
 # using subset function
-newdata_mtcars_wt <- subset(mtcars, wt >= 3.610 | wt < 2.58, select=c(mpg, cyl, disp))
+newdata_mtcars_wt <- subset(mtcars, wt >= 3.610 | wt < 2.58, 
+                            select = c(mpg, cyl, disp, wt))
  
 print(newdata_mtcars_wt)
 
@@ -208,16 +208,16 @@ print(newdata_mtcars_wt)
 # EaIn the next example, we select cars with miles per gallon greater than 20.09 and carburetors = 2 but we keep variables from horsepower to 1/4 mile time (hp, drat, wt and qsec).
 # using subset function (part 2)
 
-newdata_mtcars_range <- subset(mtcars, mtcars$carb==2 & mtcars$mpg > 20.09, select=hp:qsec)
+newdata_mtcars_range <- subset(mtcars, mtcars$carb == 2 & mtcars$mpg > 20.09, select = hp:qsec)
 
 head(newdata_mtcars_range)
 
 # Subsetting Data: Random Samples
 
-# Use the sample( ) function to take a random sample of size n from a dataset.
+# Use the sample() function to take a random sample of size n from a dataset.
 # Example: take a random sample of size 15 from the dataset mtcars sample without replacement
 
-mysample_mtcars <- mtcars[sample(1:nrow(mtcars), 15, replace=FALSE),]
+mysample_mtcars <- mtcars[sample(1:nrow(mtcars), 15, replace = FALSE),]
 
 dim(mysample_mtcars) # shows dimensions of new dataset i.e. 15 rows and 11 columns original was 32 rows
 
@@ -227,12 +227,12 @@ dim(mysample_mtcars) # shows dimensions of new dataset i.e. 15 rows and 11 colum
 
 # install.packages("dplyr")
 library(dplyr)
-
-# Dplyr: select( ) function
+library(tidyverse)
+# Dplyr: select() function
 # Objective: Reduce dataframe size to only desired variables for current task
 # The select() function allows you to select and/or rename variables.
 # Function:    select(data, ...)
-# Same as:     data %>% select(...)
+# Same as:     data %>% select(...) |> 
 
 # Read the provided "expenditure" data into R
 expenditures <- read.delim("expenditures.txt", sep="")
