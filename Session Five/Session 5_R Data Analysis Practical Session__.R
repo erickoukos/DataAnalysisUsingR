@@ -479,7 +479,7 @@ lines(xfit, yfit, col="blue", lwd=2)
 # one (one of the modes being around the centre of the Duncetown distribution, and the 
 # other being around the centre of the Sussex data). 
 
-
+########################################
 # self test:
 
 dunceData<-subset(rexam, rexam$uni==0)
